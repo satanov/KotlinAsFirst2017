@@ -1,7 +1,9 @@
 @file:Suppress("UNUSED_PARAMETER")
 package lesson2.task1
 
+
 import lesson1.task1.discriminant
+
 
 /**
  * Пример
@@ -33,16 +35,19 @@ fun minBiRoot(a: Double, b: Double, c: Double): Double {
  * Мой возраст. Для заданного 0 < n < 200, рассматриваемого как возраст человека,
  * вернуть строку вида: «21 год», «32 года», «12 лет».
  */
-fun ageDescription(age: Int): String
+fun ageDescription(age: Int):String
 {
-    return if(age in (5..20) || age in (105..120) ||(age % 10 > 4) || (age % 10 == 0)) "$age лет"
-    else
+    return when
     {
-        if ((age % 10 < 5) && (age % 10 > 1)) "$age года"
-        else "$age год"
+        age in (5..20) -> "$age лет"
+        age in (105..120) -> "$age лет"
+        age % 10 in (5..9) -> "$age лет"
+        age % 10 == 0 -> "$age лет"
+        age % 10 == 1 -> "$age год"
+        age % 10 in (2..4) -> "$age года"
+        else -> "$age"
     }
 }
-
 /**
  * Простая
  *
@@ -52,7 +57,17 @@ fun ageDescription(age: Int): String
  */
 fun timeForHalfWay(t1: Double, v1: Double,
                    t2: Double, v2: Double,
-                   t3: Double, v3: Double): Double = TODO()
+                   t3: Double, v3: Double): Double
+{
+    val s1: Double = v1 * t1
+    val s2: Double = v2 * t2
+    val s3: Double = v3 * t3
+    val s: Double = s1 + s2 + s3
+    val s0: Double = s / 2.0
+    if (s0 <= s1) return s0/v1
+    else if (s0 <= s1 + s2) return t1 + ((s0-s1)/v2)
+    else return t1 + t2 + ((s0 - s1 - s2)/v3)
+}
 
 
 /**
@@ -68,14 +83,12 @@ fun whichRookThreatens(kingX: Int, kingY: Int,
                        rookX1: Int, rookY1: Int,
                        rookX2: Int, rookY2: Int): Int
 {
-    var danger: Int
-    if ((kingX == rookX1) || (kingY == rookY1)) danger = 1
-    else danger = 0
-    if ((kingX == rookX2) || (kingY == rookY2)) danger = danger + 2
-    return danger
+    var threat: Int = 0
+    threat = if((kingX == rookX1) || (kingY == rookY1)) 1
+    else 0
+    if((kingX == rookX2) || (kingY == rookY2)) threat += 2
+    return threat
 }
-
-
 /**
  * Простая
  *
@@ -90,16 +103,13 @@ fun rookOrBishopThreatens(kingX: Int, kingY: Int,
                           rookX: Int, rookY: Int,
                           bishopX: Int, bishopY: Int): Int
 {
-    var danger : Int
-    if ( (kingX == rookX) || (kingY == rookY) ) danger = 1
-    else danger = 0
-    if ((kingX - bishopX) * (kingX - bishopX) == (kingY - bishopY) * (kingY - bishopY))
-    {
-        danger += 2
-    }
-    return danger
+    var threat = 0
+    threat = if ((kingX == rookX) || (kingY == rookY)) 1
+    else 0
+    if ((kingX + kingY == bishopX + bishopY)
+            || (kingX - kingY == bishopX - bishopY)) threat += 2
+    return threat
 }
-
 /**
  * Простая
  *
@@ -108,8 +118,16 @@ fun rookOrBishopThreatens(kingX: Int, kingY: Int,
  * прямоугольным (вернуть 1) или тупоугольным (вернуть 2).
  * Если такой треугольник не существует, вернуть -1.
  */
-fun triangleKind(a: Double, b: Double, c: Double): Int = TODO()
-
+fun triangleKind(a: Double, b: Double, c: Double):Int {
+    var danger: Int
+    if(a > b + c || b > a + c || c > a + b) {
+        danger = -1
+    }
+    else if((a * a == b * b + c * c) || (b * b == a * a + c * c) || (c * c == a * a + b * b)) danger = 1
+    else if((a * a > b * b + c * c) or (b * b >a * a + c * c) or (c * c > a * a + b * b)) danger = 2
+    else danger = 0
+    return danger
+}
 /**
  * Средняя
  *
@@ -118,4 +136,16 @@ fun triangleKind(a: Double, b: Double, c: Double): Int = TODO()
  * Найти длину пересечения отрезков AB и CD.
  * Если пересечения нет, вернуть -1.
  */
-fun segmentLength(a: Int, b: Int, c: Int, d: Int): Int = TODO()
+fun segmentLength(a: Int, b: Int, c: Int, d: Int): Int
+{
+    if (a in (c..d) && b in (c..d)) return b - a
+    else if (c in (a..b) && d in (a..b)) return d - c
+    else if (a !in (c..d) && b in (c..d)) return b - c
+    else if (c !in (a..b) && d in (a..b)) return d - a
+    else if (a in (c..d) && b !in (c..d)) return d - a
+    else if (c in (a..b) && d !in (a..b)) return b - c
+    else if (a !in (c..d) && b !in (c..d)) return -1
+    else if (b == c) return 0
+    else if (d == c) return 0
+    else return 0
+}
