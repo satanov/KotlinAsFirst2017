@@ -3,7 +3,8 @@ package lesson2.task1
 
 
 import lesson1.task1.discriminant
-
+import lesson1.task1.sqr
+import java.lang.Math.*
 
 /**
  * Пример
@@ -63,10 +64,13 @@ fun timeForHalfWay(t1: Double, v1: Double,
     val s2: Double = v2 * t2
     val s3: Double = v3 * t3
     val s: Double = s1 + s2 + s3
-    val s0: Double = s / 2.0
-    if (s0 <= s1) return s0/v1
-    else if (s0 <= s1 + s2) return t1 + ((s0-s1)/v2)
-    else return t1 + t2 + ((s0 - s1 - s2)/v3)
+    val halfoftheway: Double = s / 2.0
+    return when
+    {
+        halfoftheway <= s1 -> halfoftheway / v1
+        halfoftheway <= s1 + s2 -> t1 + ((halfoftheway - s1)/ v2)
+        else -> t1 + t2 + ((halfoftheway - s1 - s2) / v3)
+    }
 }
 
 
@@ -83,8 +87,7 @@ fun whichRookThreatens(kingX: Int, kingY: Int,
                        rookX1: Int, rookY1: Int,
                        rookX2: Int, rookY2: Int): Int
 {
-    var threat: Int = 0
-    threat = if((kingX == rookX1) || (kingY == rookY1)) 1
+    var threat = if((kingX == rookX1) || (kingY == rookY1)) 1
     else 0
     if((kingX == rookX2) || (kingY == rookY2)) threat += 2
     return threat
@@ -103,8 +106,7 @@ fun rookOrBishopThreatens(kingX: Int, kingY: Int,
                           rookX: Int, rookY: Int,
                           bishopX: Int, bishopY: Int): Int
 {
-    var threat = 0
-    threat = if ((kingX == rookX) || (kingY == rookY)) 1
+    var threat = if ((kingX == rookX) || (kingY == rookY)) 1
     else 0
     if ((kingX + kingY == bishopX + bishopY)
             || (kingX - kingY == bishopX - bishopY)) threat += 2
@@ -120,13 +122,16 @@ fun rookOrBishopThreatens(kingX: Int, kingY: Int,
  */
 fun triangleKind(a: Double, b: Double, c: Double):Int {
     var danger: Int
-    if(a > b + c || b > a + c || c > a + b) {
-        danger = -1
+
+    return when
+    {
+        a > b + c || b > a + c || c > a + b -> -1
+        sqr(a) == sqr(b) + sqr(c) || sqr(b) == sqr(a) + sqr(c)
+                || sqr(c) == sqr(a) + sqr(b) -> 1
+        sqr(a) > sqr(b) + sqr(c) || sqr(b) > sqr(a) + sqr(c)
+                || sqr(c) > (sqr(a) + sqr(b)) -> 2
+        else -> 0
     }
-    else if((a * a == b * b + c * c) || (b * b == a * a + c * c) || (c * c == a * a + b * b)) danger = 1
-    else if((a * a > b * b + c * c) or (b * b >a * a + c * c) or (c * c > a * a + b * b)) danger = 2
-    else danger = 0
-    return danger
 }
 /**
  * Средняя
@@ -138,7 +143,9 @@ fun triangleKind(a: Double, b: Double, c: Double):Int {
  */
 fun segmentLength(a: Int, b: Int, c: Int, d: Int): Int
 {
-    if (a in (c..d) && b in (c..d)) return b - a
+     if (a in (c..d) && b in (c..d)) {
+        return b - a
+    }
     else if (c in (a..b) && d in (a..b)) return d - c
     else if (a !in (c..d) && b in (c..d)) return b - c
     else if (c !in (a..b) && d in (a..b)) return d - a
