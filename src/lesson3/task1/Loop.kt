@@ -207,12 +207,7 @@ fun squareBetweenExists(m: Int, n: Int): Boolean
     {
         if(Math.pow(i.toDouble(), 2.0) >= m && Math.pow(i.toDouble(),2.0) <= n) flag = 1
     }
-    if (flag == 1)
-    {
-        return true
-    }
-    else
-        return false
+    return flag == 1
 }
 
 /**
