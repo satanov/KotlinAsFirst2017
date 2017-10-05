@@ -199,7 +199,21 @@ fun isCoPrime(m: Int, n: Int): Boolean
  * то есть, существует ли такое целое k, что m <= k*k <= n.
  * Например, для интервала 21..28 21 <= 5*5 <= 28, а для интервала 51..61 квадрата не существует.
  */
-fun squareBetweenExists(m: Int, n: Int): Boolean = TODO()
+fun squareBetweenExists(m: Int, n: Int): Boolean
+{
+    var sqrtn:Int = Math.sqrt(n.toDouble()).toInt()
+    var flag:Int = 0
+    for(i:Int in 1..sqrtn)
+    {
+        if(Math.pow(i.toDouble(), 2.0) >= m && Math.pow(i.toDouble(),2.0) <= n) flag = 1
+    }
+    if (flag == 1)
+    {
+        return true
+    }
+    else
+        return false
+}
 
 /**
  * Средняя
@@ -218,7 +232,6 @@ fun sin(x: Double, eps: Double): Double = TODO()
  * Нужную точность считать достигнутой, если очередной член ряда меньше eps по модулю
  */
 fun cos(x: Double, eps: Double): Double = TODO()
-
 /**
  * Средняя
  *
