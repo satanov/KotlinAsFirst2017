@@ -37,18 +37,12 @@ fun minBiRoot(a: Double, b: Double, c: Double): Double {
  * вернуть строку вида: «21 год», «32 года», «12 лет».
  */
 fun ageDescription(age: Int):String
-{
-    return when
-    {
-        age in (5..20) -> "$age лет"
-        age in (105..120) -> "$age лет"
-        age % 10 in (5..9) -> "$age лет"
-        age % 10 == 0 -> "$age лет"
-        age % 10 == 1 -> "$age год"
-        age % 10 in (2..4) -> "$age года"
-        else -> "$age"
-    }
-}
+        = when {
+            age in (5..20) || age % 10 == 0 || age % 10 in (5..9)
+                    || age in (105..120) -> "$age лет"
+            age % 10 in (2..4) -> "$age года"
+            else -> "$age год"
+        }
 /**
  * Простая
  *
@@ -64,12 +58,12 @@ fun timeForHalfWay(t1: Double, v1: Double,
     val s2: Double = v2 * t2
     val s3: Double = v3 * t3
     val s: Double = s1 + s2 + s3
-    val halfoftheway: Double = s / 2.0
+    val halfOfTheWay: Double = s / 2.0
     return when
     {
-        halfoftheway <= s1 -> halfoftheway / v1
-        halfoftheway <= s1 + s2 -> t1 + ((halfoftheway - s1)/ v2)
-        else -> t1 + t2 + ((halfoftheway - s1 - s2) / v3)
+        halfOfTheWay <= s1 -> halfOfTheWay / v1
+        halfOfTheWay <= s1 + s2 -> t1 + (halfOfTheWay - s1)/ v2
+        else -> t1 + t2 + (halfOfTheWay - s1 - s2) / v3
     }
 }
 
@@ -87,9 +81,9 @@ fun whichRookThreatens(kingX: Int, kingY: Int,
                        rookX1: Int, rookY1: Int,
                        rookX2: Int, rookY2: Int): Int
 {
-    var threat = if((kingX == rookX1) || (kingY == rookY1)) 1
+    var threat = if(kingX == rookX1 || kingY == rookY1) 1
     else 0
-    if((kingX == rookX2) || (kingY == rookY2)) threat += 2
+    if(kingX == rookX2 || kingY == rookY2) threat += 2
     return threat
 }
 /**
@@ -106,10 +100,10 @@ fun rookOrBishopThreatens(kingX: Int, kingY: Int,
                           rookX: Int, rookY: Int,
                           bishopX: Int, bishopY: Int): Int
 {
-    var threat = if ((kingX == rookX) || (kingY == rookY)) 1
+    var threat = if (kingX == rookX || kingY == rookY) 1
     else 0
-    if ((kingX + kingY == bishopX + bishopY)
-            || (kingX - kingY == bishopX - bishopY)) threat += 2
+    if (kingX + kingY == bishopX + bishopY
+            || kingX - kingY == bishopX - bishopY) threat += 2
     return threat
 }
 /**
@@ -121,15 +115,14 @@ fun rookOrBishopThreatens(kingX: Int, kingY: Int,
  * Если такой треугольник не существует, вернуть -1.
  */
 fun triangleKind(a: Double, b: Double, c: Double):Int {
-    var danger: Int
-
+    val bc: Double = sqr(b) + sqr(c)
+    val ac: Double = sqr(a) + sqr(c)
+    val ab: Double = sqr(a) + sqr(b)
     return when
     {
         a > b + c || b > a + c || c > a + b -> -1
-        sqr(a) == sqr(b) + sqr(c) || sqr(b) == sqr(a) + sqr(c)
-                || sqr(c) == sqr(a) + sqr(b) -> 1
-        sqr(a) > sqr(b) + sqr(c) || sqr(b) > sqr(a) + sqr(c)
-                || sqr(c) > (sqr(a) + sqr(b)) -> 2
+        sqr(a) == bc || sqr(b) == ac || sqr(c) == ab -> 1
+        sqr(a) > bc || sqr(b) > ac || sqr(c) > ab -> 2
         else -> 0
     }
 }
