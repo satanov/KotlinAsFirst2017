@@ -62,7 +62,7 @@ fun seconds(hours: Int, minutes: Int, seconds: Int): Int =
  * 1 сажень = 3 аршина = 48 вершков, 1 вершок = 4.445 см.
  */
 fun lengthInMeters(sagenes: Int, arshins: Int, vershoks: Int): Double =
-        (sagenes * 48 * 4.445 + 16 * arshins * 4.445 + vershoks * 4.445) / 100
+        (48 * sagenes + 16 * arshins + vershoks) * 4.445 / 100
 
 /**
  * Тривиальная
@@ -80,7 +80,6 @@ fun angleInRadian(grad: Int, min: Int, sec: Int): Double =
  */
 fun trackLength(x1: Double, y1: Double, x2: Double, y2: Double): Double =
         sqrt(sqr(x2 - x1) + sqr(y2 - y1))
-        //abs(vector) = sqrt(sqr(x2 - x1) + sqr(y2 - y1) + sqr(z2 - z1))
 /**
  * Простая
  *
@@ -97,7 +96,7 @@ fun thirdDigit(number: Int): Int =
  * Определите время поезда в пути в минутах (в данном случае 216).
  */
 fun travelMinutes(hoursDepart: Int, minutesDepart: Int, hoursArrive: Int, minutesArrive: Int): Int =
-        (hoursArrive * 60 + minutesArrive) - (hoursDepart * 60 + minutesDepart)
+        (hoursArrive - hoursDepart) * 60 + minutesArrive - minutesDepart
 
 /**
  * Простая
