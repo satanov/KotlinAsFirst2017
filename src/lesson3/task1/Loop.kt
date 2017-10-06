@@ -67,8 +67,7 @@ fun digitNumber(n: Int): Int
         return 1
     }
     var num = n
-    var a: Int = 0
-    var sum: Int = 0
+    var sum = 0
     while(num != 0)
     {
         sum += 1
@@ -85,22 +84,21 @@ fun digitNumber(n: Int): Int
  */
 fun fib(n: Int): Int
 {
-    var i: Int = 2
-    var i1:Int = 1
-    var i2:Int = 1
-    var sum:Int = 0
+    var cycle = 2
+    var previousIndex = 1
+    var nextIndex = 1
     if((n == 1) || (n == 2)) return 1
     else
     {
-        while(i < n)
+        while(cycle < n)
         {
-            sum = i1 + i2
-            i1 = i2
-            i2 = sum
-            i++
+            var sum = previousIndex + nextIndex
+            previousIndex = nextIndex
+            nextIndex = sum
+            cycle++
         }
     }
-    return sum
+    return nextIndex
 }
 /**
  * Простая
@@ -134,9 +132,9 @@ fun lcm(m: Int, n: Int): Int
  */
 fun minDivisor(n: Int):Int
 {
-    var i: Int = 2
-    var minden:Int = 1
-    var sqrtn:Int = Math.sqrt(n.toDouble()).toInt()
+    var i= 2
+    var minden = 1
+    var sqrtn = Math.sqrt(n.toDouble()).toInt()
     while (i <= sqrtn)
     {
         if(n % i == 0)
@@ -146,8 +144,8 @@ fun minDivisor(n: Int):Int
         }
         i++
     }
-    if(minden == 1) return n
-    else return minden
+    return if(minden == 1) n
+    else minden
 }
 /**
  * Простая
@@ -202,12 +200,16 @@ fun isCoPrime(m: Int, n: Int): Boolean
 fun squareBetweenExists(m: Int, n: Int): Boolean
 {
     var sqrtn:Int = Math.sqrt(n.toDouble()).toInt()
-    var flag:Int = 0
+    var flag = false
+    if (m == 0 && n == 0)
+    {
+        flag = true
+    }
     for(i:Int in 1..sqrtn)
     {
-        if(Math.pow(i.toDouble(), 2.0) >= m && Math.pow(i.toDouble(),2.0) <= n) flag = 1
+        if(Math.pow(i.toDouble(), 2.0) >= m && Math.pow(i.toDouble(),2.0) <= n) flag = true
     }
-    return flag == 1
+    return flag
 }
 
 /**
@@ -252,12 +254,8 @@ fun revert(n: Int): Int {
  */
 fun isPalindrome(n: Int): Boolean
 {
-    var k: Int = 0
+    var k= revert(n)
     var n1 = n
-    while (n1 > 0){
-        k = k * 10 + (n1 % 10)
-        n1 /= 10
-    }
     return k == n
 }
 
