@@ -53,11 +53,7 @@ fun circleInside(x1: Double, y1: Double, r1: Double,
  * кирпич 4 х 4 х 4 пройдёт через отверстие 4 х 4.
  * Вернуть true, если кирпич пройдёт
  */
-fun brickPasses(a: Int, b: Int, c: Int, r: Int, s: Int): Boolean
-{
-    var theLeast:Int = minOf(minOf(a,b), c)
-    var less:Int = minOf(maxOf(a, b), c)
-    var theShortest:Int = minOf(r, s)
-    var theLongest:Int = maxOf(r, s)
-    return theLeast <= theShortest && less <= theLongest
-}
+fun brickPasses(a: Int, b: Int, c: Int, r: Int, s: Int): Boolean =
+    ((a <= r) && (b <= s)) || ((a <= r) && (c <= s)) || ((b <= r)&&(c <= s)) ||
+            ((a <= s) && (b <= r)) || ((a <= s) && ( c <= r)) || ((b <= s) && (c <= r))
+
