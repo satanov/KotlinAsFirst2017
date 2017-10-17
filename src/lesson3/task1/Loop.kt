@@ -1,5 +1,8 @@
 @file:Suppress("UNUSED_PARAMETER")
 package lesson3.task1
+import lesson1.task1.sqr
+import java.lang.Math.*
+import javax.print.attribute.IntegerSyntax
 
 /**
  * Пример
@@ -60,17 +63,12 @@ fun digitCountInNumber(n: Int, m: Int): Int =
  * Найти количество цифр в заданном числе n.
  * Например, число 1 содержит 1 цифру, 456 -- 3 цифры, 65536 -- 5 цифр.
  */
-fun digitNumber(n: Int): Int
-{
-    if (n == 0)
-    {
-        return 1
-    }
+fun digitNumber(n: Int): Int {
+    if (n == 0) return 1
     var num = n
     var sum = 0
-    while(num != 0)
-    {
-        sum += 1
+    while(num != 0) {
+        sum ++
         num /= 10
     }
     return sum
@@ -82,21 +80,16 @@ fun digitNumber(n: Int): Int
  * Найти число Фибоначчи из ряда 1, 1, 2, 3, 5, 8, 13, 21, ... с номером n.
  * Ряд Фибоначчи определён следующим образом: fib(1) = 1, fib(2) = 1, fib(n+2) = fib(n) + fib(n+1)
  */
-fun fib(n: Int): Int
-{
+fun fib(n: Int): Int {
     var cycle = 2
     var previousIndex = 1
     var nextIndex = 1
     if((n == 1) || (n == 2)) return 1
-    else
-    {
-        while(cycle < n)
-        {
-            var sum = previousIndex + nextIndex
-            previousIndex = nextIndex
-            nextIndex = sum
-            cycle++
-        }
+    while(cycle < n) {
+        var sum = previousIndex + nextIndex
+        previousIndex = nextIndex
+        nextIndex = sum
+        cycle++
     }
     return nextIndex
 }
@@ -106,23 +99,15 @@ fun fib(n: Int): Int
  * Для заданных чисел m и n найти наименьшее общее кратное, то есть,
  * минимальное число k, которое делится и на m и на n без остатка
  */
-fun lcm(m: Int, n: Int): Int
-{
+fun lcm(m: Int, n: Int): Int {
     var n1 = n
     var m1 = m
-    var dub = m1 * n1
-    while (m1 != n1)
-    {
-        if(m1 > n1)
-        {
-            m1 -= n1
-        }
-        else
-        {
-            n1 -= m1
-        }
+    var multi = m1 * n1
+    while (m1 != n1) {
+        if(m1 > n1) m1 -= n1
+        else n1 -= m1
     }
-    return dub / m1
+    return multi / m1
 }
 
 /**
@@ -130,22 +115,19 @@ fun lcm(m: Int, n: Int): Int
  *
  * Для заданного числа n > 1 найти минимальный делитель, превышающий 1
  */
-fun minDivisor(n: Int):Int
-{
-    var i= 2
-    var minden = 1
-    var sqrtn = Math.sqrt(n.toDouble()).toInt()
-    while (i <= sqrtn)
-    {
-        if(n % i == 0)
-        {
-            minden = i
+fun minDivisor(n: Int):Int {
+    var index= 2
+    var minDen = 1
+    var sqrtN = Math.sqrt(n.toDouble()).toInt()
+    while (index <= sqrtN) {
+        if(n % index == 0) {
+            minDen = index
             break
         }
-        i++
+        index++
     }
-    return if(minden == 1) n
-    else minden
+    return if(minDen == 1) n
+    else minDen
 }
 /**
  * Простая
@@ -153,15 +135,14 @@ fun minDivisor(n: Int):Int
  * Для заданного числа n > 1 найти максимальный делитель, меньший n
  */
 fun maxDivisor(n: Int): Int {
-    var maxden:Int = 1
-    for(i:Int in n-1 downTo 1)
-    {
+    var maxDen = 1
+    for(i:Int in n-1 downTo 1) {
         if(n % i == 0) {
-            maxden = i
+            maxDen = i
             break
         }
     }
-    return maxden
+    return maxDen
 }
 
 /**
@@ -171,18 +152,14 @@ fun maxDivisor(n: Int): Int {
  * Взаимно простые числа не имеют общих делителей, кроме 1.
  * Например, 25 и 49 взаимно простые, а 6 и 8 -- нет.
  */
-fun isCoPrime(m: Int, n: Int): Boolean
-{
+fun isCoPrime(m: Int, n: Int): Boolean {
     var m1:Int = m
     var n1:Int = n
-    while(m1 !=0 && n1 !=0 )
-    {
-        if ( m1 >= n1)
-        {
+    while(m1 !=0 && n1 !=0 ) {
+        if ( m1 >= n1) {
             m1 %= n1
         }
-        else
-        {
+        else {
             n1 %= m1
         }
     }
@@ -199,15 +176,11 @@ fun isCoPrime(m: Int, n: Int): Boolean
  */
 fun squareBetweenExists(m: Int, n: Int): Boolean
 {
-    var sqrtn:Int = Math.sqrt(n.toDouble()).toInt()
+    var sqrtN:Int = sqrt(n.toDouble()).toInt()
     var flag = false
-    if (m == 0 && n == 0)
-    {
-        flag = true
-    }
-    for(i:Int in 1..sqrtn)
-    {
-        if(Math.pow(i.toDouble(), 2.0) >= m && Math.pow(i.toDouble(),2.0) <= n) flag = true
+    if (m == 0 && n == 0) flag = true
+    for(i:Int in 1..sqrtN) {
+        if(pow(i.toDouble(), 2.0) >= m && pow(i.toDouble(),2.0) <= n) flag = true
     }
     return flag
 }
