@@ -36,10 +36,9 @@ fun minBiRoot(a: Double, b: Double, c: Double): Double {
  * Мой возраст. Для заданного 0 < n < 200, рассматриваемого как возраст человека,
  * вернуть строку вида: «21 год», «32 года», «12 лет».
  */
-fun ageDescription(age: Int):String
-        = when {
-            age in (5..20) || age % 10 == 0 || age % 10 in (5..9)
-                    || age in (105..120) -> "$age лет"
+fun ageDescription(age: Int):String =
+        when {
+            age in (5..20) + (105..120) || age % 10 == 0 || age % 10 in (5..9) -> "$age лет"
             age % 10 in (2..4) -> "$age года"
             else -> "$age год"
         }
@@ -54,16 +53,18 @@ fun timeForHalfWay(t1: Double, v1: Double,
                    t2: Double, v2: Double,
                    t3: Double, v3: Double): Double
 {
-    val s1: Double = v1 * t1
-    val s2: Double = v2 * t2
-    val s3: Double = v3 * t3
-    val s: Double = s1 + s2 + s3
-    val halfOfTheWay: Double = s / 2.0
-    return when
-    {
-        halfOfTheWay <= s1 -> halfOfTheWay / v1
-        halfOfTheWay <= s1 + s2 -> t1 + (halfOfTheWay - s1)/ v2
-        else -> t1 + t2 + (halfOfTheWay - s1 - s2) / v3
+    val distance1: Double = v1 * t1
+    val distance2: Double = v2 * t2
+    val distance3: Double = v3 * t3
+    val fullDistance: Double = distance1 + distance2 + distance3
+    val halfOfTheWay: Double = fullDistance / 2.0
+    return when {
+        halfOfTheWay <= distance1 ->
+            halfOfTheWay / v1
+        halfOfTheWay <= distance1 + distance2 ->
+            t1 + (halfOfTheWay - distance1)/ v2
+        else ->
+            t1 + t2 + (halfOfTheWay - distance1 - distance2) / v3
     }
 }
 
@@ -115,14 +116,15 @@ fun rookOrBishopThreatens(kingX: Int, kingY: Int,
  * Если такой треугольник не существует, вернуть -1.
  */
 fun triangleKind(a: Double, b: Double, c: Double):Int {
-    val bc: Double = sqr(b) + sqr(c)
-    val ac: Double = sqr(a) + sqr(c)
-    val ab: Double = sqr(a) + sqr(b)
-    return when
-    {
-        a > b + c || b > a + c || c > a + b -> -1
-        sqr(a) == bc || sqr(b) == ac || sqr(c) == ab -> 1
-        sqr(a) > bc || sqr(b) > ac || sqr(c) > ab -> 2
+    var min: Double = minOf(minOf(a, b), c)
+    var mid: Double = if ((a > b) && (a < c) || (a < b) && (a > c)) a
+    else if((b > a) && (b < c) || (b < a) && (b > c)) b
+    else c
+    var max: Double = maxOf(maxOf(a, b), c)
+    return when {
+        max > min + mid -> -1
+        sqr(max) == sqr(mid) + sqr(min) -> 1
+        sqr(max) > sqr(mid) + sqr(min) -> 2
         else -> 0
     }
 }
@@ -134,18 +136,12 @@ fun triangleKind(a: Double, b: Double, c: Double):Int {
  * Найти длину пересечения отрезков AB и CD.
  * Если пересечения нет, вернуть -1.
  */
-fun segmentLength(a: Int, b: Int, c: Int, d: Int): Int
-{
-     if (a in (c..d) && b in (c..d)) {
-        return b - a
-    }
-    else if (c in (a..b) && d in (a..b)) return d - c
-    else if (a !in (c..d) && b in (c..d)) return b - c
-    else if (c !in (a..b) && d in (a..b)) return d - a
-    else if (a in (c..d) && b !in (c..d)) return d - a
-    else if (c in (a..b) && d !in (a..b)) return b - c
-    else if (a !in (c..d) && b !in (c..d)) return -1
-    else if (b == c) return 0
-    else if (d == c) return 0
-    else return 0
+fun segmentLength(a: Int, b: Int, c: Int, d: Int): Int =
+        when {
+        a in (c..d) && b in (c..d) -> b - a
+        c in (a..b) && d in (a..b) -> d - c
+        a !in (c..d) && b in (c..d) -> b - c
+        c !in (a..b) && d in (a..b) -> d - a
+        a !in (c..d) && b !in (c..d) -> -1
+        else -> 0
 }
