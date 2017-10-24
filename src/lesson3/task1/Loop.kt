@@ -86,7 +86,7 @@ fun fib(n: Int): Int {
     var nextIndex = 1
     if((n == 1) || (n == 2)) return 1
     while(cycle < n) {
-        var sum = previousIndex + nextIndex
+        val sum = previousIndex + nextIndex
         previousIndex = nextIndex
         nextIndex = sum
         cycle++
@@ -102,7 +102,7 @@ fun fib(n: Int): Int {
 fun lcm(m: Int, n: Int): Int {
     var n1 = n
     var m1 = m
-    var multi = m1 * n1
+    val multi = m1 * n1
     while (m1 != n1) {
         if(m1 > n1) m1 -= n1
         else n1 -= m1
@@ -118,7 +118,7 @@ fun lcm(m: Int, n: Int): Int {
 fun minDivisor(n: Int):Int {
     var index= 2
     var minDen = 1
-    var sqrtN = Math.sqrt(n.toDouble()).toInt()
+    val sqrtN = Math.sqrt(n.toDouble()).toInt()
     while (index <= sqrtN) {
         if(n % index == 0) {
             minDen = index
@@ -156,12 +156,8 @@ fun isCoPrime(m: Int, n: Int): Boolean {
     var m1:Int = m
     var n1:Int = n
     while(m1 !=0 && n1 !=0 ) {
-        if ( m1 >= n1) {
-            m1 %= n1
-        }
-        else {
-            n1 %= m1
-        }
+        if ( m1 >= n1) m1 %= n1
+        else n1 %= m1
     }
     m1 += n1
     return m1 == 1
@@ -174,15 +170,14 @@ fun isCoPrime(m: Int, n: Int): Boolean {
  * то есть, существует ли такое целое k, что m <= k*k <= n.
  * Например, для интервала 21..28 21 <= 5*5 <= 28, а для интервала 51..61 квадрата не существует.
  */
-fun squareBetweenExists(m: Int, n: Int): Boolean
-{
-    var sqrtN:Int = sqrt(n.toDouble()).toInt()
-    var flag = false
-    if (m == 0 && n == 0) flag = true
-    for(i:Int in 1..sqrtN) {
-        if(pow(i.toDouble(), 2.0) >= m && pow(i.toDouble(),2.0) <= n) flag = true
+fun squareBetweenExists(m: Int, n: Int): Boolean {
+    val m1:Int = sqrt(m.toDouble()).toInt()
+    val n1:Int = sqrt(n.toDouble()).toInt()
+    if (m == 0 && n == 0) return true
+    for(i:Int in m1..n1) {
+        if(pow(i.toDouble(), 2.0) in (m..n)) return true
     }
-    return flag
+    return false
 }
 
 /**
@@ -192,7 +187,18 @@ fun squareBetweenExists(m: Int, n: Int): Boolean
  * sin(x) = x - x^3 / 3! + x^5 / 5! - x^7 / 7! + ...
  * Нужную точность считать достигнутой, если очередной член ряда меньше eps по модулю
  */
-fun sin(x: Double, eps: Double): Double = TODO()
+fun sin(x: Double, eps: Double): Double {
+    val x1 = x % (2 * PI)
+    var member = x1
+    var sin = x1
+    var index = 2
+    while(abs(member)  > eps) {
+        member = - member * pow(x, 2.0) / (index * (index + 1))
+        sin += member
+        index += 2
+    }
+    return sin
+}
 
 /**
  * Средняя
@@ -201,7 +207,20 @@ fun sin(x: Double, eps: Double): Double = TODO()
  * cos(x) = 1 - x^2 / 2! + x^4 / 4! - x^6 / 6! + ...
  * Нужную точность считать достигнутой, если очередной член ряда меньше eps по модулю
  */
-fun cos(x: Double, eps: Double): Double = TODO()
+fun cos(x: Double, eps: Double): Double {
+    val x1 = x % (2 * PI)
+    var member = x1
+    var cos = 1.0
+    var index = 2
+    var sign = -1
+    while(abs(member) > eps) {
+        member = sign * pow(x,index.toDouble()) / factorial(index)
+        cos += member
+        sign *= -1
+        index += 2
+    }
+    return cos
+}
 /**
  * Средняя
  *
@@ -209,7 +228,7 @@ fun cos(x: Double, eps: Double): Double = TODO()
  * Не использовать строки при решении задачи.
  */
 fun revert(n: Int): Int {
-    var k: Int = 0
+    var k = 0
     var n1 = n
     while (n1 > 0){
         k = k * 10 + (n1 % 10)
@@ -227,8 +246,7 @@ fun revert(n: Int): Int {
  */
 fun isPalindrome(n: Int): Boolean
 {
-    var k= revert(n)
-    var n1 = n
+    val k= revert(n)
     return k == n
 }
 
@@ -241,19 +259,15 @@ fun isPalindrome(n: Int): Boolean
  */
 fun hasDifferentDigits(n: Int): Boolean
 {
-    var main:Int = 0
-    var pred:Int = 0
     var n1:Int = n
-    pred = n1 % 10
-    while(n1 != 0)
-    {
-        main = n1 % 10
-        if(main != pred)
-        {
+    var previous = n1 % 10
+    while(n1 != 0) {
+        val main = n1 % 10
+        if(main != previous) {
             return true
         }
         n1 /= 10
-        pred = main
+        previous = main
     }
     return false
 }
@@ -266,7 +280,6 @@ fun hasDifferentDigits(n: Int): Boolean
  * Например, 2-я цифра равна 4, 7-я 5, 12-я 6.
  */
 fun squareSequenceDigit(n: Int): Int = TODO()
-
 /**
  * Сложная
  *
