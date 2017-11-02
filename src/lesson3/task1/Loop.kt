@@ -136,7 +136,7 @@ fun minDivisor(n: Int):Int {
  */
 fun maxDivisor(n: Int): Int {
     var maxDen = 1
-    for(i:Int in n-1 downTo 1) {
+    for(i in n-1 downTo 1) {
         if(n % i == 0) {
             maxDen = i
             break
@@ -153,8 +153,8 @@ fun maxDivisor(n: Int): Int {
  * Например, 25 и 49 взаимно простые, а 6 и 8 -- нет.
  */
 fun isCoPrime(m: Int, n: Int): Boolean {
-    var m1:Int = m
-    var n1:Int = n
+    var m1 = m
+    var n1 = n
     while(m1 !=0 && n1 !=0 ) {
         if ( m1 >= n1) m1 %= n1
         else n1 %= m1
@@ -171,10 +171,10 @@ fun isCoPrime(m: Int, n: Int): Boolean {
  * Например, для интервала 21..28 21 <= 5*5 <= 28, а для интервала 51..61 квадрата не существует.
  */
 fun squareBetweenExists(m: Int, n: Int): Boolean {
-    val m1:Int = sqrt(m.toDouble()).toInt()
-    val n1:Int = sqrt(n.toDouble()).toInt()
+    val squareRootForM = sqrt(m.toDouble()).toInt()
+    val squareRootForN = sqrt(n.toDouble()).toInt()
     if (m == 0 && n == 0) return true
-    for(i:Int in m1..n1) {
+    for(i in squareRootForM..squareRootForN) {
         if(pow(i.toDouble(), 2.0) in (m..n)) return true
     }
     return false
@@ -188,14 +188,16 @@ fun squareBetweenExists(m: Int, n: Int): Boolean {
  * Нужную точность считать достигнутой, если очередной член ряда меньше eps по модулю
  */
 fun sin(x: Double, eps: Double): Double {
-    val x1 = x % (2 * PI)
-    var member = x1
-    var sin = x1
+    val changedX = x % (2 * PI)
+    var member = changedX
     var index = 2
-    while(abs(member)  > eps) {
-        member = - member * pow(x, 2.0) / (index * (index + 1))
-        sin += member
+    var point = -1
+    var sin = 0.0
+    while (abs(member) >= eps) {
+        sin +=  -point * member
+        member *= sqr(changedX) / (index * (index + 1))
         index += 2
+        point *= -1
     }
     return sin
 }
@@ -208,15 +210,15 @@ fun sin(x: Double, eps: Double): Double {
  * Нужную точность считать достигнутой, если очередной член ряда меньше eps по модулю
  */
 fun cos(x: Double, eps: Double): Double {
-    val x1 = x % (2 * PI)
-    var member = x1
-    var cos = 1.0
+    val changedX = x % (2 * PI)
+    var member = 1.0
     var index = 2
-    var sign = -1
-    while(abs(member) > eps) {
-        member = sign * pow(x,index.toDouble()) / factorial(index)
-        cos += member
-        sign *= -1
+    var point = 1
+    var cos = 0.0
+    while (abs(member) >= eps) {
+        cos += point * member
+        member *= sqr(changedX) / (index * (index - 1))
+        point *= -1
         index += 2
     }
     return cos
@@ -244,12 +246,8 @@ fun revert(n: Int): Int {
  * первая цифра равна последней, вторая -- предпоследней и так далее.
  * 15751 -- палиндром, 3653 -- нет.
  */
-fun isPalindrome(n: Int): Boolean
-{
-    val k= revert(n)
-    return k == n
-}
-
+fun isPalindrome(n: Int): Boolean =
+        n == revert(n)
 
 /**
  * Средняя
@@ -259,7 +257,7 @@ fun isPalindrome(n: Int): Boolean
  */
 fun hasDifferentDigits(n: Int): Boolean
 {
-    var n1:Int = n
+    var n1 = n
     var previous = n1 % 10
     while(n1 != 0) {
         val main = n1 % 10
@@ -279,7 +277,19 @@ fun hasDifferentDigits(n: Int): Boolean
  * 149162536496481100121144...
  * Например, 2-я цифра равна 4, 7-я 5, 12-я 6.
  */
-fun squareSequenceDigit(n: Int): Int = TODO()
+fun squareSequenceDigit(n: Int): Int{
+    var member = n
+    var index = 0
+    var sqrIndex:Int
+    while (0 < member){
+        index++
+        sqrIndex = sqr(index.toDouble()).toInt()
+        member -= digitNumber(sqrIndex)
+    }
+    sqrIndex = sqr(index.toDouble()).toInt()
+    val positiveMember = abs((member - 1).toDouble())
+    return sqrIndex / pow(10.0, positiveMember - 1).toInt() % 10
+}
 /**
  * Сложная
  *
@@ -287,4 +297,16 @@ fun squareSequenceDigit(n: Int): Int = TODO()
  * 1123581321345589144...
  * Например, 2-я цифра равна 1, 9-я 2, 14-я 5.
  */
-fun fibSequenceDigit(n: Int): Int = TODO()
+fun fibSequenceDigit(n: Int): Int {
+    var member = n
+    var index = 0
+    var fibIndex:Int
+    while(0 < member) {
+        index++
+        fibIndex = fib(index)
+        member -= digitNumber(fibIndex)
+    }
+    fibIndex = fib(index)
+    val positiveMember = abs((member - 1).toDouble())
+    return fibIndex / pow(10.0, positiveMember - 1).toInt() % 10
+}
