@@ -38,9 +38,12 @@ fun minBiRoot(a: Double, b: Double, c: Double): Double {
  */
 fun ageDescription(age: Int):String =
         when {
-            age in (5..20) + (105..120) || age % 10 == 0 || age % 10 in (5..9) -> "$age лет"
-            age % 10 in (2..4) -> "$age года"
-            else -> "$age год"
+            age in (5..20) + (105..120) || age % 10 == 0 || age % 10 in (5..9) ->
+                "$age лет"
+            age % 10 in (2..4) ->
+                "$age года"
+            else ->
+                "$age год"
         }
 /**
  * Простая
@@ -53,16 +56,16 @@ fun timeForHalfWay(t1: Double, v1: Double,
                    t2: Double, v2: Double,
                    t3: Double, v3: Double): Double
 {
-    val distance1: Double = v1 * t1
-    val distance2: Double = v2 * t2
-    val distance3: Double = v3 * t3
-    val fullDistance: Double = distance1 + distance2 + distance3
-    val halfOfTheWay: Double = fullDistance / 2.0
+    val distance1 = v1 * t1
+    val distance2 = v2 * t2
+    val distance3 = v3 * t3
+    val fullDistance = distance1 + distance2 + distance3
+    val halfOfTheWay = fullDistance / 2.0
     return when {
         halfOfTheWay <= distance1 ->
             halfOfTheWay / v1
         halfOfTheWay <= distance1 + distance2 ->
-            t1 + (halfOfTheWay - distance1)/ v2
+            t1 + (halfOfTheWay - distance1) / v2
         else ->
             t1 + t2 + (halfOfTheWay - distance1 - distance2) / v3
     }
@@ -116,16 +119,20 @@ fun rookOrBishopThreatens(kingX: Int, kingY: Int,
  * Если такой треугольник не существует, вернуть -1.
  */
 fun triangleKind(a: Double, b: Double, c: Double):Int {
-    var min: Double = minOf(minOf(a, b), c)
-    var mid: Double = if ((a > b) && (a < c) || (a < b) && (a > c)) a
-    else if((b > a) && (b < c) || (b < a) && (b > c)) b
-    else c
-    var max: Double = maxOf(maxOf(a, b), c)
-    return when {
-        max > min + mid -> -1
-        sqr(max) == sqr(mid) + sqr(min) -> 1
-        sqr(max) > sqr(mid) + sqr(min) -> 2
-        else -> 0
+    val min = minOf(minOf(a, b), c)
+    val max = maxOf(maxOf(a, b), c)
+    val sum = a + b + c
+    val mid = sum - (min + max)
+    val cos = (sqr(min) + sqr(mid) - sqr(max)) / (2 * mid * min)
+    return when{
+        (cos > 0) && (cos < 1) ->
+            0
+        cos == 0.0 ->
+                1
+        (cos < 0) && (cos > -1) ->
+                2
+        else ->
+            -1
     }
 }
 /**
@@ -136,12 +143,15 @@ fun triangleKind(a: Double, b: Double, c: Double):Int {
  * Найти длину пересечения отрезков AB и CD.
  * Если пересечения нет, вернуть -1.
  */
-fun segmentLength(a: Int, b: Int, c: Int, d: Int): Int =
-        when {
-        a in (c..d) && b in (c..d) -> b - a
-        c in (a..b) && d in (a..b) -> d - c
-        a !in (c..d) && b in (c..d) -> b - c
-        c !in (a..b) && d in (a..b) -> d - a
-        a !in (c..d) && b !in (c..d) -> -1
-        else -> 0
+fun segmentLength(a: Int, b: Int, c: Int, d: Int): Int = when {
+    a in (c..d) && b in (c..d) ->
+        b - a
+    c in (a..b) && d in (a..b) ->
+        d - c
+    c in (a..b) ->
+        b - c
+    d in (a..b) ->
+        d - a
+    else ->
+        -1
 }
