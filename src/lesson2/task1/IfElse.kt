@@ -125,14 +125,10 @@ fun triangleKind(a: Double, b: Double, c: Double):Int {
     val mid = sum - (min + max)
     val cos = (sqr(min) + sqr(mid) - sqr(max)) / (2 * mid * min)
     return when{
-        (cos > 0) && (cos < 1) ->
-            0
-        cos == 0.0 ->
-                1
-        (cos < 0) && (cos > -1) ->
-                2
-        else ->
-            -1
+        (cos > 0) && (cos < 1) -> 0
+        cos == 0.0 -> 1
+        (cos < 0) && (cos > -1) -> 2
+        else -> -1
     }
 }
 /**
@@ -144,14 +140,9 @@ fun triangleKind(a: Double, b: Double, c: Double):Int {
  * Если пересечения нет, вернуть -1.
  */
 fun segmentLength(a: Int, b: Int, c: Int, d: Int): Int = when {
-    a in (c..d) && b in (c..d) ->
-        b - a
-    c in (a..b) && d in (a..b) ->
-        d - c
-    c in (a..b) ->
-        b - c
-    d in (a..b) ->
-        d - a
-    else ->
-        -1
+    a in (c..d) && b in (c..d) -> b - a
+    c in (a..b) && d in (a..b) -> d - c
+    c in (a..b) -> b - c
+    d in (a..b) -> d - a
+    else -> -1
 }
