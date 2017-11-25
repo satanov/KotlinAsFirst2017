@@ -81,15 +81,13 @@ fun digitNumber(n: Int): Int {
  * Ряд Фибоначчи определён следующим образом: fib(1) = 1, fib(2) = 1, fib(n+2) = fib(n) + fib(n+1)
  */
 fun fib(n: Int): Int {
-    var cycle = 2
     var previousIndex = 1
     var nextIndex = 1
     if((n == 1) || (n == 2)) return 1
-    while(cycle < n) {
+    for(cicle:Int in 2 until n) {
         val sum = previousIndex + nextIndex
         previousIndex = nextIndex
         nextIndex = sum
-        cycle++
     }
     return nextIndex
 }
@@ -280,13 +278,12 @@ fun hasDifferentDigits(n: Int): Boolean
 fun squareSequenceDigit(n: Int): Int{
     var member = n
     var index = 0
-    var sqrIndex:Int
+    var sqrIndex = 0
     while (0 < member){
         index++
         sqrIndex = sqr(index.toDouble()).toInt()
         member -= digitNumber(sqrIndex)
     }
-    sqrIndex = sqr(index.toDouble()).toInt()
     val positiveMember = abs((member - 1).toDouble())
     return sqrIndex / pow(10.0, positiveMember - 1).toInt() % 10
 }
@@ -300,13 +297,12 @@ fun squareSequenceDigit(n: Int): Int{
 fun fibSequenceDigit(n: Int): Int {
     var member = n
     var index = 0
-    var fibIndex:Int
+    var fibIndex = 0
     while(0 < member) {
         index++
         fibIndex = fib(index)
         member -= digitNumber(fibIndex)
     }
-    fibIndex = fib(index)
     val positiveMember = abs((member - 1).toDouble())
     return fibIndex / pow(10.0, positiveMember - 1).toInt() % 10
 }
