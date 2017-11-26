@@ -147,14 +147,14 @@ fun dateDigitToStr(digital: String): String {
         val month = parts[1].toInt()
         val year = parts[2].toInt()
 
-        if(day == 0 || month == 0 || year == 0) {
+        if(day == 0 || month == 0) {
             return ""
         }
 
         dayString += "$day"
 
-        val amountOfMounth = string[month - 1]
-        monthString += amountOfMounth
+        val amountOfMonth = string[month - 1]
+        monthString += amountOfMonth
 
         yearString += "$year"
 
