@@ -106,7 +106,6 @@ fun dateStrToDigit(str: String): String {
         }
 
         val amountOfMonths = amount(month)
-
         monthString += if(amountOfMonths == 2) {
             "$month"
         }
