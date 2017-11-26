@@ -93,12 +93,11 @@ fun dateStrToDigit(str: String): String {
         val month = string.indexOf(parts[1]) + 1
         val year = parts[2].toInt()
 
-        val amountOfDays = amount(day)
-
-        if(day == 0 || month == 0 || year == 0) {
+        if(day == 0 || month == 0) {
             return ""
         }
 
+        val amountOfDays = amount(day)
         dayString += if(amountOfDays == 2) {
             "$day"
         }
@@ -131,7 +130,40 @@ fun dateStrToDigit(str: String): String {
  * Перевести её в строковый формат вида "15 июля 2016".
  * При неверном формате входной строки вернуть пустую строку
  */
-fun dateDigitToStr(digital: String): String = TODO()
+fun dateDigitToStr(digital: String): String {
+    val string = listOf("января", "февраля", "марта", "апреля", "мая", "июня", "июля", "августа", "сентября", "октября", "ноября", "декабря")
+    val parts = digital.split(".")
+
+    var dayString = ""
+    var monthString = ""
+    var yearString = ""
+
+    if(parts.size != 3) {
+        return ""
+    }
+
+    try {
+        val day = parts[0].toInt()
+        val month = parts[1].toInt()
+        val year = parts[2].toInt()
+
+        if(day == 0 || month == 0 || year == 0) {
+            return ""
+        }
+
+        dayString += "$day"
+
+        val amountOfMounth = string[month - 1]
+        monthString += amountOfMounth
+
+        yearString += "$year"
+
+        return "$dayString $monthString $yearString"
+    }
+    catch (e: NumberFormatException) {
+        return ""
+    }
+}
 
 /**
  * Средняя
