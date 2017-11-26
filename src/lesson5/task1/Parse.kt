@@ -176,7 +176,16 @@ fun dateDigitToStr(digital: String): String {
  * Все символы в номере, кроме цифр, пробелов и +-(), считать недопустимыми.
  * При неверном формате вернуть пустую строку
  */
-fun flattenPhoneNumber(phone: String): String = TODO()
+fun flattenPhoneNumber(phone: String): String {
+    val list = phone
+    val filter = list.filter {it != '(' && it != ')' && it != ' ' && it != '-'}
+    for(i in 0 until filter.length) {
+        if(filter[i] !in '0'..'9' && filter[i] != '+') {
+            return ""
+        }
+    }
+    return filter
+}
 
 /**
  * Средняя
