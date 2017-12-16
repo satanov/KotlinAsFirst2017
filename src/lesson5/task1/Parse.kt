@@ -218,12 +218,12 @@ fun plusMinus(expression: String): Int {
         val sum = intList.sum()
         for(i in 0 until parts.size) {
             if(parts[i] == "-" || parts[i] == "+") {
-                if(i % 2 != 0) {
+                if(i % 2 == 0) {
                     throw IllegalArgumentException()
                 }
             }
             if(parts[i] != "-" && parts[i] != "+") {
-                if(i % 2 == 0) {
+                if(i % 2 != 0) {
                     throw IllegalArgumentException()
                 }
             }
