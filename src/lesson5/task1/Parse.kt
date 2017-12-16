@@ -143,10 +143,14 @@ fun dateDigitToStr(digital: String): String {
 fun flattenPhoneNumber(phone: String): String {
     val list = phone
     val filter = list.filter {it != '(' && it != ')' && it != ' ' && it != '-'}
-    for(i in 0 until filter.length) {
-        if(filter[i] !in '0'..'9' && filter[0] != '+') {
-            return ""
+    try {
+        for (i in 0 until filter.length) {
+            if (filter[i] !in '0'..'9' && filter[0] != '+') {
+                return ""
+            }
         }
+    } catch (e: NumberFormatException) {
+        -1
     }
     return filter
 }
@@ -187,6 +191,7 @@ fun bestLongJump(jumps: String): Int {
 fun bestHighJump(jumps: String): Int {
     val list = jumps.split(" ")
     var integer= listOf<Int>()
+    val filtet = list.filter { it != "-" && it != "%" && it != " " }
     try {
         for (i in 0 until list.size) {
             if (list[i] == "+") {
