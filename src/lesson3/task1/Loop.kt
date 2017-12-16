@@ -84,7 +84,7 @@ fun fib(n: Int): Int {
     var previousIndex = 1
     var nextIndex = 1
     if((n == 1) || (n == 2)) return 1
-    for(cicle:Int in 2 until n) {
+    for(cicle in 2 until n) {
         val sum = previousIndex + nextIndex
         previousIndex = nextIndex
         nextIndex = sum
