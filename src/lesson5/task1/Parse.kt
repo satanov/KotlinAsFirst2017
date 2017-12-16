@@ -191,11 +191,11 @@ fun bestLongJump(jumps: String): Int {
 fun bestHighJump(jumps: String): Int {
     val list = jumps.split(" ")
     var integer= listOf<Int>()
-    val filtet = list.filter { it != "-" && it != "%" && it != " " }
+    val filter = list.filter { it != "-" && it != "%" && it != " " }
     try {
-        for (i in 0 until list.size) {
-            if (list[i] == "+") {
-                integer += list[i - 1].toInt()
+        for (i in 0 until filter.size) {
+            if (filter[i] == "+") {
+                integer += filter[i - 1].toInt()
             }
         }
     }
