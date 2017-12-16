@@ -85,7 +85,7 @@ fun dateStrToDigit(str: String): String {
             return ""
         }
 
-        return String.format("%02d.%02d.%02d", day, month, year)
+        return String.format("%02d.%02d.%d", day, month, year)
     }
     catch (e: NumberFormatException) {
         return ""
@@ -216,6 +216,18 @@ fun plusMinus(expression: String): Int {
         val filter = parts.filter { it != "+" && it != "-" }
         val intList = filter.map { it.toInt() }
         val sum = intList.sum()
+        for(i in 0 until parts.size) {
+            if(parts[i] == "-" || parts[i] == "+") {
+                if(i % 2 != 0) {
+                    throw IllegalArgumentException()
+                }
+            }
+            if(parts[i] != "-" && parts[i] != "+") {
+                if(i % 2 == 0) {
+                    throw IllegalArgumentException()
+                }
+            }
+        }
         for(i in 0 until parts.size) {
             if(parts[i] == "-") {
                 subtraction += parts[i + 1]
