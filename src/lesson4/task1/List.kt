@@ -298,7 +298,8 @@ fun decimalFromString(str: String, base: Int): Int = TODO()
  */
 fun roman(n: Int): String {
     val list = listOf(1000, 900, 500, 400, 100, 90, 50, 40, 10, 9, 5, 4, 1)
-    val string = listOf("M", "CM", "D", "CD", "C", "XC", "L", "XL", "X", "IX", "V", "IV", "I")
+    val string = listOf("M", "CM", "D", "CD", "C", "XC", "L", "XL", "X", "IX",
+            "V", "IV", "I")
     var i = 0
     var roman = ""
     var n1 = n
