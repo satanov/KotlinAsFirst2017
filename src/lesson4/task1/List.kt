@@ -120,7 +120,7 @@ fun mean(list: List<Double>): Double {
     } else {
         val sum = list.sum()
         val size = list.size
-        (sum / size)
+        sum / size
     }
 }
 
@@ -246,12 +246,15 @@ fun convert(n: Int, base: Int): List<Int> {
  */
 
 fun convertToString(n: Int, base: Int): String {
-    val alphabet = "abcdefghijklmnopqrstuvwxyz"
     var sum = ""
     val convert = convert(n, base)
     for(i in 0 until convert.size) {
-        sum += if (convert[i] in 0..9) convert[i]
-        else alphabet[convert[i] - 10]
+        sum += if(convert[i] in 0..9) {
+            convert[i]
+        }
+        else {
+            'a' + (convert[i]-10)
+        }
     }
     return sum
 }
@@ -282,14 +285,8 @@ fun decimal(digits: List<Int>, base: Int): Int {
  * 10 -> a, 11 -> b, 12 -> c и так далее.
  * Например: str = "13c", base = 14 -> 250
  */
-fun decimalFromString(str: String, base: Int): Int {
-    var list = listOf<Int>()
-    val alphabet = "0123456789abcdefghijklmnopqrstuvwxyz"
-    for(i in 0 until str.length) {
-        list += alphabet.indexOf(str[i])
-    }
-    return decimal(list, base)
-}
+fun decimalFromString(str: String, base: Int): Int = TODO()
+
 
 /**
  * Сложная
