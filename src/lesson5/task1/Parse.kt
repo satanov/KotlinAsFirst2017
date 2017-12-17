@@ -198,20 +198,12 @@ fun plusMinus(expression: String): Int {
                 }
                 else throw IllegalArgumentException()
             }
-            if(parts[i] != "-" && parts[i] != "+") {
+            /*if(parts[i] != "-" && parts[i] != "+") {
                 if(i % 2 != 0) {
                     throw IllegalArgumentException()
                 }
-            }
+            }*/
         }
-        /*for(i in 2 until parts.size step 2) {
-            if(parts[i - 1] == "+") {
-                member += parts[i].toInt()
-            }
-            else if(parts[i] == "-") {
-                member -= parts[i].toInt()
-            }
-        }*/
         return member
     } catch(e: NumberFormatException) { throw IllegalArgumentException() }
 }
