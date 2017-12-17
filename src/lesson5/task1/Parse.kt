@@ -206,8 +206,8 @@ fun plusMinus(expression: String): Int {
                 subtraction += parts[i + 1]
             }
         }
-        val SubtractionToInt = subtraction.map { it.toInt() }
-        val sumOfSubtraction = SubtractionToInt.sum()
+        val subtractionToInt = subtraction.map { it.toInt() }
+        val sumOfSubtraction = subtractionToInt.sum()
         return sum - sumOfSubtraction * 2
     } catch(e: NumberFormatException) { throw IllegalArgumentException() }
 }
