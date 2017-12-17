@@ -186,11 +186,17 @@ fun plusMinus(expression: String): Int {
     val parts = expression.split(" ")
     var member = parts[0].toInt()
     try {
-        for(i in 0 until parts.size) {
+        for(i in 1 until parts.size) {
             if(parts[i] == "-" || parts[i] == "+") {
-                if(i % 2 == 0) {
-                    throw IllegalArgumentException()
+                if(i % 2 != 0) {
+                    if(parts[i] == "+") {
+                        member += parts[i+1].toInt()
+                    }
+                    if(parts[i] == "-") {
+                        member -= parts[i+1].toInt()
+                    }
                 }
+                else throw IllegalArgumentException()
             }
             if(parts[i] != "-" && parts[i] != "+") {
                 if(i % 2 != 0) {
@@ -198,14 +204,14 @@ fun plusMinus(expression: String): Int {
                 }
             }
         }
-        for(i in 0 until parts.size) {
-            if(parts[i] == "+") {
-                member += parts[i+1].toInt()
+        /*for(i in 2 until parts.size step 2) {
+            if(parts[i - 1] == "+") {
+                member += parts[i].toInt()
             }
-            if(parts[i] == "-") {
-                member -= parts[i+1].toInt()
+            else if(parts[i] == "-") {
+                member -= parts[i].toInt()
             }
-        }
+        }*/
         return member
     } catch(e: NumberFormatException) { throw IllegalArgumentException() }
 }
