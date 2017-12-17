@@ -122,6 +122,9 @@ fun diameter(vararg points: Point): Segment {
             end = points[j]
         }
     }
+    if (points.size < 2) {
+        throw IllegalArgumentException()
+    }
     return Segment(begin, end)
 }
 
@@ -187,7 +190,8 @@ fun lineByPoints(a: Point, b: Point): Line {
  *
  * Построить серединный перпендикуляр по отрезку или по двум точкам
  */
-fun bisectorByPoints(a: Point, b: Point): Line = TODO()
+fun bisectorByPoints(a: Point, b: Point): Line =
+        Line(Point((a.x + b.x) / 2, (a.y + b.y) / 2), (PI / 2 + lineByPoints(a, b).angle) % PI)
 
 /**
  * Средняя
