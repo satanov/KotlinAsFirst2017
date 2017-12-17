@@ -108,7 +108,21 @@ data class Segment(val begin: Point, val end: Point) {
  * Дано множество точек. Вернуть отрезок, соединяющий две наиболее удалённые из них.
  * Если в множестве менее двух точек, бросить IllegalArgumentException
  */
-fun diameter(vararg points: Point): Segment = TODO()
+fun diameter(vararg points: Point): Segment {
+    if (points.size < 2) throw IllegalArgumentException()
+    var max = 0.0
+    var begin = Point(0.0, 0.0)
+    var end = Point(0.0, 0.0)
+    for (i in 0..points.size - 2) for (j in i + 1 until points.size) {
+        val distance = points[i].distance(points[j])
+        if (distance > max) {
+            max = distance
+            begin = points[i]
+            end = points[j]
+        }
+    }
+    return Segment(begin, end)
+}
 
 /**
  * Простая
