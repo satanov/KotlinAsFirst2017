@@ -2,7 +2,6 @@
 package lesson6.task1
 
 import lesson1.task1.sqr
-import java.lang.Math.*
 
 /**
  * Точка на плоскости
@@ -131,9 +130,7 @@ fun diameter(vararg points: Point): Segment {
  * Построить окружность по её диаметру, заданному двумя точками
  * Центр её должен находиться посередине между точками, а радиус составлять половину расстояния между ними
  */
-fun circleByDiameter(diameter: Segment): Circle =
-        Circle(Point(((diameter.begin.x + diameter.end.x) / 2), (diameter.begin.y + diameter.end.y) / 2),
-diameter.begin.distance(diameter.end) / 2)
+fun circleByDiameter(diameter: Segment): Circle = TODO()
 
 /**
  * Прямая, заданная точкой point и углом наклона angle (в радианах) по отношению к оси X.
@@ -154,11 +151,7 @@ class Line private constructor(val b: Double, val angle: Double) {
      * Найти точку пересечения с другой линией.
      * Для этого необходимо составить и решить систему из двух уравнений (каждое для своей прямой)
      */
-    fun crossPoint(other: Line): Point {
-        val x = (other.b * cos(angle) - b * cos(other.angle)) / sin(angle - other.angle)
-        val y = (b * sin(other.angle) - other.b * sin(angle)) / sin(other.angle - angle )
-        return Point (x, y)
-    }
+    fun crossPoint(other: Line): Point = TODO()
 
     override fun equals(other: Any?) = other is Line && angle == other.angle && b == other.b
 
