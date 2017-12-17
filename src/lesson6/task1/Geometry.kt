@@ -2,6 +2,7 @@
 package lesson6.task1
 
 import lesson1.task1.sqr
+import java.lang.Math.*
 
 /**
  * Точка на плоскости
@@ -169,15 +170,18 @@ class Line private constructor(val b: Double, val angle: Double) {
  *
  * Построить прямую по отрезку
  */
-fun lineBySegment(s: Segment): Line = TODO()
+fun lineBySegment(s: Segment): Line = lineByPoints(s.begin, s.end)
 
 /**
  * Средняя
  *
  * Построить прямую по двум точкам
  */
-fun lineByPoints(a: Point, b: Point): Line = TODO()
-
+fun lineByPoints(a: Point, b: Point): Line {
+    val arctg = atan((a.y - b.y) / (a.x - b.x))
+    val angle = if (arctg < 0.0) PI + arctg else arctg
+    return Line(a, angle)
+}
 /**
  * Сложная
  *
