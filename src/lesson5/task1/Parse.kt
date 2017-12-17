@@ -140,7 +140,7 @@ fun dateDigitToStr(digital: String): String {
  * Все символы в номере, кроме цифр, пробелов и +-(), считать недопустимыми.
  * При неверном формате вернуть пустую строку
  */
-fun flattenPhoneNumber(phone: String): String {
+fun flattenPhoneNumber(phone: String): String = TODO() /*{
     val list = phone
     val filter = list.filter {it != '(' && it != ')' && it != ' ' && it != '-'}
     try {
@@ -153,7 +153,7 @@ fun flattenPhoneNumber(phone: String): String {
         -1
     }
     return filter
-}
+} */
 
 /**
  * Средняя
@@ -165,7 +165,7 @@ fun flattenPhoneNumber(phone: String): String {
  * Прочитать строку и вернуть максимальное присутствующее в ней число (717 в примере).
  * При нарушении формата входной строки или при отсутствии в ней чисел, вернуть -1.
  */
-fun bestLongJump(jumps: String): Int {
+fun bestLongJump(jumps: String): Int = TODO()/*{
     var max = -1
     try {
         val parts = jumps.split(" ")
@@ -176,7 +176,7 @@ fun bestLongJump(jumps: String): Int {
         -1
     }
     return if (max == -1) -1 else max
-}
+} */
 
 /**
  * Сложная
@@ -191,16 +191,10 @@ fun bestLongJump(jumps: String): Int {
 fun bestHighJump(jumps: String): Int {
     val list = jumps.split(" ")
     var integer= listOf<Int>()
-    val filter = list.filter { it != "-" && it != "%" && it != " " }
-    try {
-        for (i in 0 until filter.size) {
-            if (filter[i] == "+") {
-                integer += filter[i - 1].toInt()
-            }
+    for (i in 0 until list.size) {
+        if (list[i].any {it == '+'}) {
+            integer += list[i - 1].toInt()
         }
-    }
-    catch (e: NumberFormatException) {
-        -1
     }
     return integer.max() ?: -1
 }
