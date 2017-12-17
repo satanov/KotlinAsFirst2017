@@ -184,8 +184,8 @@ fun bestHighJump(jumps: String): Int {
  */
 fun plusMinus(expression: String): Int {
     val parts = expression.split(" ")
+    var member = parts[0].toInt()
     try {
-        var member = parts[0].toInt()
         for(i in 1 until parts.size) {
             if(parts[i] == "-" || parts[i] == "+") {
                 if(i % 2 != 0) {
@@ -198,14 +198,14 @@ fun plusMinus(expression: String): Int {
                 }
                 else throw IllegalArgumentException()
             }
-            /*if(parts[i] != "-" && parts[i] != "+") {
+            if(parts[i] != "-" && parts[i] != "+") {
                 if(i % 2 != 0) {
                     throw IllegalArgumentException()
                 }
-            }*/
+            }
         }
-        return member
     } catch(e: NumberFormatException) { throw IllegalArgumentException() }
+    return member
 }
 /**
  * Сложная
