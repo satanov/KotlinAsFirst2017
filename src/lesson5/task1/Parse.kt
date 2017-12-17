@@ -103,7 +103,6 @@ fun dateDigitToStr(digital: String): String {
     val string = listOf("января", "февраля", "марта", "апреля", "мая", "июня",
             "июля", "августа", "сентября", "октября", "ноября", "декабря")
     val parts = digital.split(".")
-    var monthString = ""
 
     if(parts.size != 3) {
         return ""
@@ -119,9 +118,8 @@ fun dateDigitToStr(digital: String): String {
         }
 
         val amountOfMonth = string[month - 1]
-        monthString += amountOfMonth
 
-        return String.format("%d %s %d", day, monthString, year)
+        return String.format("%d %s %d", day, amountOfMonth, year)
     }
     catch (e: NumberFormatException) {
         return ""
@@ -140,20 +138,7 @@ fun dateDigitToStr(digital: String): String {
  * Все символы в номере, кроме цифр, пробелов и +-(), считать недопустимыми.
  * При неверном формате вернуть пустую строку
  */
-fun flattenPhoneNumber(phone: String): String = TODO() /*{
-    val list = phone
-    val filter = list.filter {it != '(' && it != ')' && it != ' ' && it != '-'}
-    try {
-        for (i in 0 until filter.length) {
-            if (filter[i] !in '0'..'9' && filter[0] != '+') {
-                return ""
-            }
-        }
-    } catch (e: NumberFormatException) {
-        -1
-    }
-    return filter
-} */
+fun flattenPhoneNumber(phone: String): String = TODO()
 
 /**
  * Средняя
@@ -165,18 +150,7 @@ fun flattenPhoneNumber(phone: String): String = TODO() /*{
  * Прочитать строку и вернуть максимальное присутствующее в ней число (717 в примере).
  * При нарушении формата входной строки или при отсутствии в ней чисел, вернуть -1.
  */
-fun bestLongJump(jumps: String): Int = TODO()/*{
-    var max = -1
-    try {
-        val parts = jumps.split(" ")
-        val filter = parts.filter { it != "-" && it != "%" && it != " "}
-        val intList = filter.map { it.toInt() }
-        max = intList.max()?: -1
-    } catch (e: NumberFormatException) {
-        -1
-    }
-    return if (max == -1) -1 else max
-} */
+fun bestLongJump(jumps: String): Int = TODO()
 
 /**
  * Сложная
@@ -272,32 +246,7 @@ fun mostExpensive(description: String): String = TODO()
  *
  * Вернуть -1, если roman не является корректным римским числом
  */
-fun fromRoman(roman: String): Int = TODO() /*{
-    val intList = mutableListOf<Int>()
-    val roman1 = roman
-    var s:Int = 0
-    for(i in 1 until roman1.length) {
-        when {
-            roman1[i] == 'I' -> intList[i] = 1
-            roman1[i] == 'V' -> intList[i] = 5
-            roman1[i] == 'X' -> intList[i] = 10
-            roman1[i] == 'L' -> intList[i] = 50
-            roman1[i] == 'C' -> intList[i] = 100
-            roman1[i] == 'D' -> intList[i] = 500
-            roman1[i] == 'M' -> intList[i] = 1000
-            else -> -1
-        }
-
-    }
-    s = intList[1]
-    for(i in 2 .. roman1.length) {
-        s += intList[i]
-        if(intList[i-1] < intList[i]) {
-            s -= 2 * intList[i - 1]
-        }
-    }
-    return s
-}*/
+fun fromRoman(roman: String): Int = TODO()
 
 /**
  * Очень сложная
