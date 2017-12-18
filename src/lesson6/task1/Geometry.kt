@@ -110,22 +110,23 @@ data class Segment(val begin: Point, val end: Point) {
  * Если в множестве менее двух точек, бросить IllegalArgumentException
  */
 fun diameter(vararg points: Point): Segment {
-    if (points.size < 2) throw IllegalArgumentException()
-    var max = 0.0
-    var begin = Point(0.0, 0.0)
-    var end = Point(0.0, 0.0)
-    for (i in 0..points.size - 2) for (j in i + 1 until points.size) {
-        val distance = points[i].distance(points[j])
-        if (distance > max) {
-            max = distance
-            begin = points[i]
-            end = points[j]
-        }
-    }
     if (points.size < 2) {
         throw IllegalArgumentException()
     }
-    return Segment(begin, end)
+    var theLongest = 0.0
+    var first = Point(0.0, 0.0)
+    var last = Point(0.0, 0.0)
+    for (i in 0 until points.size - 1) {
+        for (k in i + 1..points.size - 1) {
+            val distance = points[i].distance(points[k])
+            if (theLongest < distance) {
+                theLongest = distance
+                last = points[k]
+                first = points[i]
+            }
+        }
+    }
+    return Segment(first, last)
 }
 
 /**
@@ -173,24 +174,21 @@ class Line private constructor(val b: Double, val angle: Double) {
  *
  * Построить прямую по отрезку
  */
-fun lineBySegment(s: Segment): Line = lineByPoints(s.begin, s.end)
+fun lineBySegment(s: Segment): Line = TODO()
 
 /**
  * Средняя
  *
  * Построить прямую по двум точкам
  */
-fun lineByPoints(a: Point, b: Point): Line {
-    val arctg = atan((a.y - b.y) / (a.x - b.x))
-    val angle = if (arctg < 0.0) PI + arctg else arctg
-    return Line(a, angle)
-}
+fun lineByPoints(a: Point, b: Point): Line = TODO()
 /**
  * Сложная
  *
  * Построить серединный перпендикуляр по отрезку или по двум точкам
  */
-fun bisectorByPoints(a: Point, b: Point): Line = Line(Point((a.x + b.x) / 2, (a.y + b.y) / 2), (PI / 2 + lineByPoints(a, b).angle) % PI)
+fun bisectorByPoints(a: Point, b: Point): Line = Line(Point((a.x + b.x) / 2, (a.y + b.y) / 2),
+        (PI / 2 + lineByPoints(a, b).angle) % PI)
 
 /**
  * Средняя
