@@ -113,21 +113,21 @@ fun diameter(vararg points: Point): Segment {
     if (points.size < 2) {
         throw IllegalArgumentException()
     }
-    var theLongest = 0.0
-    var first = Point(0.0, 0.0)
-    var last = Point(0.0, 0.0)
-    for (i in 0 until points.size - 1) {
-        for (k in i + 1..points.size - 1) {
-            val distance = points[i].distance(points[k])
-            if (theLongest < distance) {
-                theLongest = distance
-                last = points[k]
-                first = points[i]
+    var max = points[0].distance(points[1])
+    var maxI = 0
+    var minJ = 1
+    for(i in 0 until points.size - 1) {
+        for(j in i + 1 until points.size) {
+            if(max < points[i].distance(points[j])) {
+                max = points[i].distance(points[j])
+                maxI = i
+                minJ = j
             }
         }
     }
-    return Segment(first, last)
+    return Segment(points[maxI], points[minJ])
 }
+
 
 /**
  * Простая
@@ -135,7 +135,12 @@ fun diameter(vararg points: Point): Segment {
  * Построить окружность по её диаметру, заданному двумя точками
  * Центр её должен находиться посередине между точками, а радиус составлять половину расстояния между ними
  */
-fun circleByDiameter(diameter: Segment): Circle = TODO()
+fun circleByDiameter(diameter: Segment): Circle {
+    val xCircle = (diameter.begin.x + diameter.end.x) / 2
+    val yCircle = (diameter.begin.y + diameter.end.y) / 2
+    val radiusCircle = diameter.begin.distance(diameter.end) / 2
+    return Circle(Point(xCircle, yCircle), radiusCircle)
+}
 
 /**
  * Прямая, заданная точкой point и углом наклона angle (в радианах) по отношению к оси X.
@@ -174,21 +179,32 @@ class Line private constructor(val b: Double, val angle: Double) {
  *
  * Построить прямую по отрезку
  */
-fun lineBySegment(s: Segment): Line = TODO()
+fun lineBySegment(s: Segment): Line = lineByPoints(s.begin, s.end)
 
 /**
  * Средняя
  *
  * Построить прямую по двум точкам
  */
-fun lineByPoints(a: Point, b: Point): Line = TODO()
+fun lineByPoints(a: Point, b: Point): Line {
+    val atan = atan((a.y - b.y) / (a.x - b.x))
+    return if(atan < 0.0) {
+        Line(a, PI + atan)
+    } else Line(a, atan)
+}
 /**
  * Сложная
  *
  * Построить серединный перпендикуляр по отрезку или по двум точкам
  */
-fun bisectorByPoints(a: Point, b: Point): Line = Line(Point((a.x + b.x) / 2, (a.y + b.y) / 2),
-        (PI / 2 + lineByPoints(a, b).angle) % PI)
+fun bisectorByPoints(a: Point, b: Point): Line
+{
+    val midX = (a.x + b.x) / 2
+    val midY = (a.y + b.y) / 2
+    val angle = lineByPoints(a, b).angle
+    return if (angle < PI /2) Line(Point(midX, midY), angle + PI / 2)
+    else Line(Point(midX, midY), angle - PI / 2)
+}
 
 /**
  * Средняя
