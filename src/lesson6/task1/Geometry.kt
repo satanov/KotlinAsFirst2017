@@ -214,6 +214,7 @@ fun bisectorByPoints(a: Point, b: Point): Line
  */
 fun findNearestCirclePair(vararg circles: Circle): Pair<Circle, Circle> = TODO()
 
+
 /**
  * Сложная
  *
