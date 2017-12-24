@@ -184,16 +184,19 @@ fun bestHighJump(jumps: String): Int {
  */
 fun plusMinus(expression: String): Int {
     val parts = expression.split(" ")
-    var subtraction = listOf<String>()
+    var member = parts[0].toInt()
     try {
-        val filter = parts.filter { it != "+" && it != "-" }
-        val intList = filter.map { it.toInt() }
-        val sum = intList.sum()
-        for(i in 0 until parts.size) {
+        for(i in 1 until parts.size) {
             if(parts[i] == "-" || parts[i] == "+") {
-                if(i % 2 == 0) {
-                    throw IllegalArgumentException()
+                if(i % 2 != 0) {
+                    if(parts[i] == "+") {
+                        member += parts[i+1].toInt()
+                    }
+                    if(parts[i] == "-") {
+                        member -= parts[i+1].toInt()
+                    }
                 }
+                else throw IllegalArgumentException()
             }
             if(parts[i] != "-" && parts[i] != "+") {
                 if(i % 2 != 0) {
@@ -201,16 +204,10 @@ fun plusMinus(expression: String): Int {
                 }
             }
         }
-        for(i in 0 until parts.size) {
-            if(parts[i] == "-") {
-                subtraction += parts[i + 1]
-            }
-        }
-        val subtractionToInt = subtraction.map { it.toInt() }
-        val sumOfSubtraction = subtractionToInt.sum()
-        return sum - sumOfSubtraction * 2
     } catch(e: NumberFormatException) { throw IllegalArgumentException() }
+    return member
 }
+
 /**
  * Сложная
  *
