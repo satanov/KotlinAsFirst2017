@@ -206,6 +206,7 @@ fun kingMoveNumber(start: Square, end: Square): Int {
     if(!(start.inside() || end.inside())) {
         throw IllegalArgumentException()
     }
+
     val columnSquare = Math.abs(start.column - end.column)
     val rowSquare = Math.abs(start.row - end.row)
     return maxOf(columnSquare, rowSquare)
